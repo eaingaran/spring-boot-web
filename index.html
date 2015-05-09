@@ -19,8 +19,8 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="welcome-to-jemos-spring-boot-web-sample-app" class="anchor" href="#welcome-to-jemos-spring-boot-web-sample-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Jemos Spring Boot Web sample app</h3>
+      <h1>
+<a id="welcome-to-jemos-spring-boot-web-sample-app" class="anchor" href="#welcome-to-jemos-spring-boot-web-sample-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Jemos Spring Boot Web sample app</h1>
 
 <p>The goal os this project is to provide a simple and easy template for a Spring MVC application using Spring Boot. 
 What are the advantages of using Spring Boot? </p>
@@ -45,6 +45,139 @@ What are the advantages of using Spring Boot? </p>
 <p>Now, imagine that your Spring MVC is contained in a Maven jar project, that your controller is a simple Java class with few annotations and that you can exercise it through a fully flagged servlet container like Tomcat or Jetty without having to start anything before your test or shutdown anything after the test has completed.</p>
 
 <p>This represents the holy-grail of web applications speed of development and testing consistency.  </p>
+
+<h2>
+<a id="maven-setup---its-that-easy" class="anchor" href="#maven-setup---its-that-easy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven setup - it's that easy</h2>
+
+<p>First we define the parent project to be spring-boot-starter-parent. This project defines many required dependencies and boilerplate configuration so that we don't have to do the hard work. </p>
+
+<pre><code>&lt;groupId&gt;uk.co.jemos.experiments.multimodule&lt;/groupId&gt;
+  &lt;artifactId&gt;spring-boot-web&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+  &lt;name&gt;spring-boot-web&lt;/name&gt;
+
+  &lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;1.2.3.RELEASE&lt;/version&gt;
+  &lt;/parent&gt;
+
+  &lt;url&gt;http://mtedone.github.io/spring-boot-web/&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;spring.boot.version&gt;1.2.3.RELEASE&lt;/spring.boot.version&gt;
+  &lt;/properties&gt;
+</code></pre>
+
+<p>We then define the Spring Boot maven plugin and (in my case), Java 8 compiler:</p>
+
+<pre><code>&lt;plugin&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+      &lt;/plugin&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.3&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+</code></pre>
+
+<p>For testing, I took the following approach: </p>
+
+<ul>
+<li>I want all unit tests to run by default when executing mvn goals from the command line</li>
+<li>I want all integration tests to run only when specifying a particular Maven profile. This is useful for Continuous Integration environments (e.g. Jenkins) where one might want to run unit tests at each commit and integration tests maybe nightly or a bit less frequently. </li>
+</ul>
+
+<p>For unit tests to execute I define the Maven surefire plugin:</p>
+
+<pre><code>&lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.18.1&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;skip&gt;false&lt;/skip&gt;
+            &lt;/configuration&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;id&gt;surefire-it&lt;/id&gt;
+                    &lt;phase&gt;test&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;test&lt;/goal&gt;
+                    &lt;/goals&gt;
+                    &lt;configuration&gt;
+                        &lt;skip&gt;false&lt;/skip&gt;
+                    &lt;/configuration&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+</code></pre>
+
+<p>For integration tests I specify a dedicated profiles which excludes the unit tests executing only the integration tests through the Maven failsafe plugin. I have also to exclude the execution of unit tests and I achieve this through the Maven surefire plugin configuration specifically stating that I don't want any unit tests to run while executing integration tests.</p>
+
+<pre><code>&lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;integration-tests&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;skip&gt;true&lt;/skip&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;surefire-it&lt;/id&gt;
+                        &lt;phase&gt;integration-test&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;test&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;configuration&gt;
+                            &lt;skip&gt;true&lt;/skip&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-failsafe-plugin&lt;/artifactId&gt;
+            &lt;version&gt;2.18.1&lt;/version&gt;
+            &lt;executions&gt;
+              &lt;execution&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;integration-test&lt;/goal&gt;
+                  &lt;goal&gt;verify&lt;/goal&gt;
+                &lt;/goals&gt;
+              &lt;/execution&gt;
+            &lt;/executions&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;
+</code></pre>
+
+<p>To execute unit tests I can simply type: </p>
+
+<pre><code>mvn clean test
+</code></pre>
+
+<p>Or </p>
+
+<pre><code>mvn clean install
+</code></pre>
+
+<p>To execute integration tests I can simply type: </p>
+
+<pre><code>mvn clean verify -Pintegration-tests
+</code></pre>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mtedone/spring-boot-web">Spring-boot-web</a> is maintained by <a href="https://github.com/mtedone">mtedone</a>.</span>
