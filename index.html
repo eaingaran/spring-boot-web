@@ -483,6 +483,16 @@ Process finished with exit code 0
 
 </code></pre>
 
+<h2>
+<a id="the-future" class="anchor" href="#the-future" aria-hidden="true"><span class="octicon octicon-link"></span></a>The future</h2>
+
+<p>The implications that Spring boot brings to the table are immense. Some examples that are coming to my mind: </p>
+
+<ul>
+<li><p>Running micro-services without the need of fully flagged containers. Since a Spring boot application can run as a jar, we could deploy micro-applications to highly available servers with enormous advantages for performance and horizontal scalability. </p></li>
+<li><p>Testing our applications inside out before deploying them to an integration or a production environment because easy and allows us to concentrate on the test rather than on the boilerplate code. The examples above showed that we can perform a unit test on a controller (similarly to what one would have done before) but also that we can execute integration tests running on a fully-flagged servlet container (embedded with Spring boot) as a normal unit test. These tests can verify how the controller will actually behave once deployed in production. It becomes easy to test POST requests, JSON interactions, etc. </p></li>
+</ul>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mtedone/spring-boot-web">Spring-boot-web</a> is maintained by <a href="https://github.com/mtedone">mtedone</a>.</span>
 
