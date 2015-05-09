@@ -27,9 +27,24 @@ What are the advantages of using Spring Boot? </p>
 
 <ul>
 <li>Zero XML configuration for your Spring MVC App</li>
-<li>Easy Maven setup in a <em>jar</em> project which runs your Web application</li>
+<li>Easy Maven setup in a <strong>jar</strong> project which runs your Web application</li>
 <li>Full support for unit and integration testing of your webapp without the need to start and stop containers</li>
 </ul>
+
+<p>For years developers have struggled to get an easy way to setup and test a Spring MVC application. Typically one had to:</p>
+
+<ul>
+<li>Setup a quite convoluted pom.xml with all necessary Spring dependencies</li>
+<li>Setup web.xml to register the Spring Dispatcher Servlet</li>
+<li>Setup Spring application context files, controller setup files, mappings, annotations, etc</li>
+<li>Come up with all sorts of boilerplate code to just be able to simulate a web request to a web controller with a proper request and response</li>
+</ul>
+
+<p>Although eventually this would work, it would require a lot of effort, especially on the testing front. I'm sure you've been there, googling ways to test a controller in an integration test with a proper request and response. </p>
+
+<p>Now, imagine that your Spring MVC is contained in a Maven jar project, that your controller is a simple Java class with few annotations and that you can exercise it through a fully flagged servlet container like Tomcat or Jetty without having to start anything before your test or shutdown anything after the test has completed.</p>
+
+<p>This represents the holy-grail of web applications speed of development and testing consistency.  </p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mtedone/spring-boot-web">Spring-boot-web</a> is maintained by <a href="https://github.com/mtedone">mtedone</a>.</span>
