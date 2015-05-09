@@ -23,7 +23,7 @@
 
   <build>
     <plugins>
-      <!-- Uncomment if you have uncommented the main method
+      <!-- Uncomment if you have uncommented the main method in Example.java
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
