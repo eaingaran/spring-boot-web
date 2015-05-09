@@ -1,4 +1,4 @@
-package uk.co.jemos.experiments.multimodule.test.integration;
+package uk.co.jemos.experiments.spring.boot.test.integration;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
+import uk.co.jemos.experiments.spring.boot.Example;
 
 import java.net.URL;
 

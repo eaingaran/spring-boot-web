@@ -1,4 +1,4 @@
-package uk.co.jemos.experiments.multimodule.test.unit;
+package uk.co.jemos.experiments.spring.boot.test.unit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import uk.co.jemos.experiments.multimodule.test.integration.Example;
+import uk.co.jemos.experiments.spring.boot.Example;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

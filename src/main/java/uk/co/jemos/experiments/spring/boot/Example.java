@@ -1,6 +1,5 @@
-package uk.co.jemos.experiments.multimodule.test.integration;
+package uk.co.jemos.experiments.spring.boot;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,9 @@ public class Example {
         return "Hello World";
     }
 
+    /* --Uncomment to run this as a standalone jar file from the command line
     public static void main(String[] args) {
         SpringApplication.run(Example.class, args);
     }
+    */
 }
