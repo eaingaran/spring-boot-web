@@ -85,10 +85,12 @@ What are the advantages of using Spring Boot? </p>
 
 <p>We then define the Spring Boot maven plugin and (in my case), Java 8 compiler:</p>
 
-<pre><code>&lt;plugin&gt;
+<pre><code> &lt;!-- Uncomment if you have uncommented the main method in Example.java
+      &lt;plugin&gt;
         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
         &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
       &lt;/plugin&gt;
+      --&gt;
       &lt;plugin&gt;
         &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
         &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
