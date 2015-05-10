@@ -1,10 +1,10 @@
-package uk.co.jemos.experiments.spring.boot.test.integration;
+package uk.co.jemos.experiments.spring.boot.mvc.test.integration;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
-import uk.co.jemos.experiments.spring.boot.Example;
+import uk.co.jemos.experiments.spring.boot.mvc.Example;
 
 import java.net.URL;
 
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertThat;
 @IntegrationTest("{server.port=0}")
 public class ExampleIT {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExampleIT.class);
+    private static final Logger LOG = LogManager.getLogger(ExampleIT.class);
 
     @Value("${local.server.port}")
     private int port;

@@ -1,4 +1,4 @@
-package uk.co.jemos.experiments.spring.boot;
+package uk.co.jemos.experiments.spring.boot.mvc;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;

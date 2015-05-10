@@ -1,10 +1,10 @@
-package uk.co.jemos.experiments.spring.boot.test.unit;
+package uk.co.jemos.experiments.spring.boot.mvc.test.unit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
@@ -13,7 +13,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import uk.co.jemos.experiments.spring.boot.Example;
+import uk.co.jemos.experiments.spring.boot.mvc.Example;
+
+
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 public class ExampleUnitTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ExampleUnitTest.class);
+    private static final Logger LOG = LogManager.getLogger(ExampleUnitTest.class);
 
     private MockMvc mvc;
 
