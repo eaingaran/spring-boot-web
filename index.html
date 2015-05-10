@@ -49,14 +49,78 @@ What are the advantages of using Spring Boot? </p>
 <h2>
 <a id="logging-setup" class="anchor" href="#logging-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging setup</h2>
 
-<p>The default Spring boot suite comes with quite some logging. It uses Logback by default. To customise the level of logging, you can define a logbook.xml file in your classpath root (e.g. for Maven this is src/main/resources), like so:</p>
+<p>The default Spring boot suite uses Logback by default. However, in a typical enterprise application users might want to use their own logging framework. One that I find very useful is Log4j2. Previous to version 2, Log4j had some limitations (e.g. the API and the implementation framework were tightly bound, no functionality to define placeholders in logging messages, etc.), therefore I've seen many users resorting to Slf4j. Log4j2 solves previous problems and provides the main benefits of Slf4j, therefore I'd suggest it as the logging framework of choice. </p>
+
+<p>Setting up the logging framework with Spring boot might be quite challenging. In practical terms one has to tell Maven that they want to use the Log4j2 capabilities of Sprint boot, renouncing to the default Logback. This is how it's done: </p>
+
+<ul>
+<li>Define the Log4j2 configuration, by creating the log4j2.xml file:</li>
+</ul>
 
 <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;configuration&gt;
-    &lt;include resource="org/springframework/boot/logging/logback/base.xml"/&gt;
-    &lt;logger name="org.springframework" level="WARN"/&gt;
-&lt;/configuration&gt;
+&lt;Configuration status="INFO"&gt;
+    &lt;Appenders&gt;
+        &lt;Console name="Console" target="SYSTEM_OUT"&gt;
+            &lt;PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/&gt;
+        &lt;/Console&gt;
+    &lt;/Appenders&gt;
+    &lt;Loggers&gt;
+        &lt;Root level="error"&gt;
+            &lt;AppenderRef ref="Console"/&gt;
+        &lt;/Root&gt;
+        &lt;Logger name="uk.co.jemos" level="info" additivity="false"&gt;
+            &lt;AppenderRef ref="Console"/&gt;
+        &lt;/Logger&gt;
+        &lt;Logger name="org.springframework.boot" level="info" additivity="false"&gt;
+            &lt;AppenderRef ref="Console"/&gt;
+        &lt;/Logger&gt;
+    &lt;/Loggers&gt;
+&lt;/Configuration&gt;
 </code></pre>
+
+<p>In the configuration above, I've instructed Log4j2 that I want Spring boot as well as my application's logging level set to INFO. One can fine tune the Log4j2 configuration as needed. For details, please refer to Log4j2 documentation. </p>
+
+<ul>
+<li>Instruct Maven that we want Log4j2 logging capabilities for Spring boot but also for our application. </li>
+</ul>
+
+<pre><code>&lt;dependency&gt;
+          &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+          &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+          &lt;exclusions&gt;
+              &lt;exclusion&gt;
+                  &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                  &lt;artifactId&gt;spring-boot-starter-logging&lt;/artifactId&gt;
+              &lt;/exclusion&gt;
+          &lt;/exclusions&gt;
+      &lt;/dependency&gt;
+    &lt;dependency&gt;
+          &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+          &lt;artifactId&gt;spring-boot-starter-log4j2&lt;/artifactId&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+          &lt;artifactId&gt;log4j-1.2-api&lt;/artifactId&gt;
+          &lt;version&gt;2.2&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+          &lt;artifactId&gt;log4j-web&lt;/artifactId&gt;
+          &lt;version&gt;2.2&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;commons-logging&lt;/groupId&gt;
+          &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+          &lt;version&gt;1.2&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+          &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;
+          &lt;version&gt;1.9.13&lt;/version&gt;
+      &lt;/dependency&gt;
+</code></pre>
+
+<p>The snippet above instructs Spring boot that we don't want the default Logback framework. Additionally, we have to include the commons-logging API as well as Log4j2 Spring boot logging support. The addition of standalone log4j2 dependencies is required in this project because I'm running also plain Java classes (i.e. non Spring boot), therefore I must provide the required dependencies.</p>
 
 <h2>
 <a id="maven-setup---its-that-easy" class="anchor" href="#maven-setup---its-that-easy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven setup - it's that easy</h2>
