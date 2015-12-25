@@ -13,4 +13,14 @@ public class CoreController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/payload")
+    public String payload() {
+        return "payload";
+    }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
 }
