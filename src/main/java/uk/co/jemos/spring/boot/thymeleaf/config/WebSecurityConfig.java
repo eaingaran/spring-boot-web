@@ -1,4 +1,4 @@
-package uk.co.jemos.spring.boot.thymeleaf;
+package uk.co.jemos.spring.boot.thymeleaf.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
